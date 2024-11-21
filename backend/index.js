@@ -4,6 +4,7 @@ import cors from "cors"
 import connecttoDB from "./db.js";
 import userRoute from "./routes/user.route.js"
 import buyandcart from "./routes/buyandcart.controller.js"
+import path from "path"
 import plantRoute from "./routes/plant.route.js"
 import dotenv from "dotenv";
 dotenv.config({});
@@ -11,6 +12,11 @@ dotenv.config({});
 const app = express();
 
 const PORT = 3001;
+
+const __dirname = path.resolve()
+
+
+console.log(__dirname)
 
 // app.use(express.json());
 // app.use(cookieParser());
@@ -22,7 +28,7 @@ const corsOption = {
 }
 
 // const corsOption = {
-//   origin:"https://plant-nine-ochre.vercel.app/",
+//   origin:"https://plant-wpdb.vercel.app/",
 //   credentials:true,
 // }
 
@@ -41,6 +47,14 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/plant", plantRoute)
 app.use("/api/v1/buy_or_cart",buyandcart)
+
+app.use(express.static(path.join(__dirname, "/frontend/dist")))
+
+app.get("*", (req, res) => {
+
+  res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"))
+
+})
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
