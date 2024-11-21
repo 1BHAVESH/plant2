@@ -23,7 +23,7 @@ console.log(__dirname)
 // app.use(urlencoded({extended:true})); 
 
 const corsOption = {
-  origin:"http://localhost:5173",
+  origin:"https://plant-wpdb.vercel.app/",
   credentials:true,
 }
 
